@@ -1,0 +1,8 @@
+- name: install docker
+  become: yes 
+  become_user: root
+  become_method: sudo
+  hosts: all
+  roles: 
+    - python3
+    - docker
