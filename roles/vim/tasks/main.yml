@@ -1,0 +1,10 @@
+---
+# tasks file for vim
+- name: uninstall default vi
+  apt:
+    name: vim-common
+    state: absent
+
+- name: install full vim
+  apt:
+    name: vim

@@ -1,0 +1,16 @@
+---
+# tasks file for infra
+- name: replace apt-source to aliyun mirror
+  copy:
+    content: |
+      deb https://mirrors.aliyun.com/raspbian/raspbian/ buster main non-free contrib
+      deb-src https://mirrors.aliyun.com/raspbian/raspbian/ buster main non-free contrib
+    dest: /etc/apt/sources.list
+    force: yes
+    backup: yes
+    group: root
+    owner : root
+
+- name: update apt source index
+  apt:
+    update_cache: yes
