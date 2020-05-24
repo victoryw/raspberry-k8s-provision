@@ -1,4 +1,7 @@
-[master]
+[node]
 pi1.local   
 pi2.local
 pi3.local
+
+[master]
+pi4.local
