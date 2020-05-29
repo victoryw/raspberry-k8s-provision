@@ -1,0 +1,6 @@
+---
+# defaults file for k8s
+k8s_apt_gpg_key_url: https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg
+k8s_apt_gpg_fingerprint: 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
+k8s_apt_repo: deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+k8s_grc_io_replacement: registry.cn-beijing.aliyuncs.com/tianyawy/tianyawy/

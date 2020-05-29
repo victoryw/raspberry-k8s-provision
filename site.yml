@@ -8,3 +8,5 @@
     - vim
     - python3
     - docker
+    - swap
+    - k8s

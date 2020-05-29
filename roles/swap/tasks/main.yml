@@ -1,0 +1,8 @@
+---
+# tasks file for swap
+- name: Disable swap file
+  shell: | 
+    dphys-swapfile swapoff && \
+    dphys-swapfile uninstall && \
+    update-rc.d dphys-swapfile remove
+  changed_when: false
