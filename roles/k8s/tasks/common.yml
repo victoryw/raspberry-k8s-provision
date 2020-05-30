@@ -1,0 +1,78 @@
+---
+# tasks file for k8s
+- name: Ensure dependencies are installed.
+  apt:
+    name: "{{ item }}"
+  loop:
+    - apt-transport-https
+    - curl
+
+- name: use the aliyun mirror fingerprint
+  apt_key:
+    url: "{{ k8s_apt_gpg_key_url }}"
+    id: "{{ k8s_apt_gpg_fingerprint }}"
+
+
+- name: remove the existed k8s repo
+  file:
+    path: /etc/apt/sources.list.d/k8s.list
+    state: absent
+
+- name: Add Aliyun k8s repository.
+  copy:
+    content: |
+      {{k8s_apt_repo}}
+    dest: /etc/apt/sources.list.d/k8s.list
+    force: yes
+    backup: yes
+    group: root
+    owner : root
+
+- name: update apt source index
+  apt:
+    update_cache: yes
+
+
+- name: Install Kubernetes binaries
+  apt: 
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - kubelet 
+      - kubeadm 
+      - kubectl
+
+- name: Restart kubelet
+  service:
+    name: kubelet
+    daemon_reload: yes
+    state: restarted
+
+
+- name: Install k8s image
+  docker_image: 
+    name: "{{ item }}"
+    source: pull
+  loop:
+    - "mirrorgcrio/kube-apiserver-arm:v1.18.3"
+    - "mirrorgcrio/kube-controller-manager-arm:v1.18.3"
+    - "mirrorgcrio/kube-scheduler-arm:v1.18.3"
+    - "mirrorgcrio/kube-proxy-arm:v1.18.3"
+    - "mirrorgcrio/pause-arm:3.2"
+    - "mirrorgcrio/etcd-arm:3.4.3-0"
+    - "coredns/coredns:1.6.7"
+
+- name: retag k8s image
+  docker_image: 
+    name: "{{ item.source }}"
+    repository: "{{ item.des }}"
+    source: local
+  loop:
+    - { source: mirrorgcrio/kube-apiserver-arm:v1.18.3, des: k8s.gcr.io/kube-apiserver:v1.18.3 }
+    - { source: mirrorgcrio/kube-controller-manager-arm:v1.18.3, des: k8s.gcr.io/kube-controller-manager:v1.18.3 }
+    - { source: mirrorgcrio/kube-scheduler-arm:v1.18.3, des: k8s.gcr.io/kube-scheduler:v1.18.3 }
+    - { source: mirrorgcrio/kube-proxy-arm:v1.18.3, des: k8s.gcr.io/kube-proxy:v1.18.3 }
+    - { source: mirrorgcrio/pause-arm:3.2, des: k8s.gcr.io/pause:3.2 }
+    - { source: mirrorgcrio/etcd-arm:3.4.3-0, des: k8s.gcr.io/etcd:3.4.3-0 }

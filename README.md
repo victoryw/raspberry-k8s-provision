@@ -31,4 +31,13 @@ Use the 4 pis as server
   which is about Raspberry pi server OS, hostname, ssh and so on, is on the [raspberry-os-self-setting-image](https://github.com/victoryw/raspberry-os-self-setting-image).
   This repo will resolve the problem of how automate burn os, and setup the hostname, ssh and so on.
 * Todo:
+  * complete the k8s docker image retag
+  * use the tag, hosts to split the playbook
+  * keep the provision idempotent, especially the k8s master, worker setup
+  * the master and worker nodes should work parallel and relevancy
+  * use the kubeadm token in the master create to register to run in the worker
+  * setup the k8s network by version
+  * the system setup, such as cgroup, 
+  * to solve unable to resolve host pi4: Name or service not known
   * upgrade the master to cluster
+  

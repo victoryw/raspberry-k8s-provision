@@ -1,0 +1,8 @@
+---
+- name: worker join the master
+  command: "{{ join_command }}"
+  vars:
+    join_command: >
+      kubeadm join 192.168.3.73:6443 --token bifqgx.hv4bv4lnfa8y4i3x 
+      --discovery-token-ca-cert-hash 
+      sha256:24fd1b68c71c69331ee0a3f8162bda9b915749970932dae9e1d598d513e3ab7f

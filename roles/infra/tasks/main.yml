@@ -14,3 +14,10 @@
 - name: update apt source index
   apt:
     update_cache: yes
+
+# i don not know why:https://github.com/kubernetes/kubeadm/issues/312
+- name: setup the bridga wit iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    state: present

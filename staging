@@ -1,2 +1,2 @@
-[master]  
-pi4.local
+[worker]
+pi3.local
