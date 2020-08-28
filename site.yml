@@ -1,4 +1,4 @@
-- name: install docker
+- name: init k8s master and node
   become: yes 
   become_user: root
   become_method: sudo
@@ -8,5 +8,6 @@
     - vim
     - python3
     - docker
-    - swap
+    - role: swap
+      tags: swap
     - k8s

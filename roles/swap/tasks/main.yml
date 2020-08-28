@@ -6,3 +6,8 @@
     dphys-swapfile uninstall && \
     update-rc.d dphys-swapfile remove
   changed_when: false
+
+- name: Stop dphys-swapfile service
+  service: 
+    name: dphys-swapfile.service 
+    enabled: no

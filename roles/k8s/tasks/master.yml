@@ -12,21 +12,24 @@
     - "mirrorgcrio/pause-arm:3.2"
     - "mirrorgcrio/etcd-arm:3.4.3-0"
     - "coredns/coredns:1.6.7"
+
 - name: Initialize the Kubernetes cluster using kubeadm
   command: > 
     kubeadm init \
       --apiserver-advertise-address="192.168.3.73" \
       --apiserver-cert-extra-sans="192.168.3.73"  \
-      --node-name pi4.local \
+      --node-name pi4 \
       --pod-network-cidr=192.168.0.0/16
       --token-ttl=0
   register: k8s_initialzation_result
+
 - name: Setup kubeconfig for pi user
   command: "{{ item }}"
   with_items:
     - mkdir -p /home/pi/.kube
     - cp -i /etc/kubernetes/admin.conf /home/pi/.kube/config
     - chown pi:pi /home/pi/.kube/config
+
 - name: Generate join command
   command: kubeadm token create --print-join-command
   register: join_command
