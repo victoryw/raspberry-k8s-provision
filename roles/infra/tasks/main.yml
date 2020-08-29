@@ -15,8 +15,13 @@
   apt:
     update_cache: yes
 
+- name: Add the br_netfilter for k8s bridge
+  modprobe:
+    name: br_netfilter
+    state: present
+
 # i don not know why:https://github.com/kubernetes/kubeadm/issues/312
-- name: setup the bridga wit iptables
+- name: setup the bridge wit iptables
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
     value: '1'
